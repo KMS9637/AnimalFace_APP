@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:id="@+id/main"
+    android:clickable="false">
 
     <!-- Header Section -->
     <LinearLayout
@@ -78,12 +81,13 @@
 
         <!-- My Page -->
         <ImageView
-            android:id="@+id/mypage"
+            android:id="@+id/searchButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/search"
-            android:contentDescription="Search Page"/>
+            android:contentDescription="Search Page"
+            android:clickable="true" />
     </LinearLayout>
 
     <!-- Sidebar Section -->
@@ -104,56 +108,61 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-        <TextView
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그인이 필요합니다."
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:layout_marginBottom="10dp"/>
-
-        <!-- 프로필 이미지 -->
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/mainlogo"
-            android:layout_marginBottom="15dp"
-            android:contentDescription="Profile Image"/>
-
-        <!-- 메뉴 항목들 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- 메뉴 항목 1 -->
             <TextView
-                android:id="@+id/menu_item_1"
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그인이 필요합니다."
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- 프로필 이미지 -->
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/mainlogo"
+                android:layout_marginBottom="15dp"
+                android:contentDescription="Profile Image"/>
+
+            <!-- 메뉴 항목들 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="공지사항"
-                android:textSize="18sp"
-                android:textColor="#000"/>
+                android:orientation="vertical">
 
-            <!-- 메뉴 항목 2 -->
-            <TextView
-                android:id="@+id/menu_item_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="게임 만들기"
-                android:textSize="18sp"
-                android:textColor="#000"/>
-        </LinearLayout>
+                <!-- 메뉴 항목 1 -->
+                <TextView
+                    android:id="@+id/menu_item_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="공지사항"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:clickable="true" />
+
+                <!-- 메뉴 항목 2 -->
+                <TextView
+                    android:id="@+id/menu_item_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="게임 만들기"
+                    android:textSize="18sp"
+                    android:textColor="#000"/>
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
-    <!-- Content Section -->
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        >
+
+    </FrameLayout>
 </LinearLayout>

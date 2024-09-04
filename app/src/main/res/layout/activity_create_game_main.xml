@@ -3,16 +3,31 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@null"
+        android:src="@drawable/ic_back_arrow"
+        android:contentDescription="@string/back"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="50dp"
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="재미보따리는\n여러분의 재미 있는 이야기를 듣고 싶어요!"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/toolbar"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="24dp"
+        android:text="재미보따리는\n여러분의 재미 있는 이야기를 듣고 싶어요!"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/createGameName"
@@ -51,6 +66,7 @@
         android:layout_marginBottom="24dp"
         android:lines="4"
         android:minLines="4" />
+</LinearLayout>
 
     <Button
         android:id="@+id/submitButton"

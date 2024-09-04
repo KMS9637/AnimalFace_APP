@@ -1,9 +1,12 @@
 package com.project.animalface_app.ksyapp
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -12,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.animalface_app.R
+import com.project.animalface_app.ohjapp.ksyAPI.CreateGameMainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +31,11 @@ class NoticeMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notice_main)
+
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -99,6 +108,13 @@ class NoticeMainActivity : AppCompatActivity() {
             findViewById<LinearLayout>(R.id.noticeUI)?.visibility = View.VISIBLE
         } else {
             super.onBackPressed()
+        }
+
+        val createGameButton: Button = findViewById(R.id.createGame)
+        createGameButton.setOnClickListener {
+            val intent = Intent(this, CreateGameMainActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }
