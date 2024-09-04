@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.AnimalFace_APP" parent="Base.Theme.AnimalFace_APP" />
+
 </resources>
