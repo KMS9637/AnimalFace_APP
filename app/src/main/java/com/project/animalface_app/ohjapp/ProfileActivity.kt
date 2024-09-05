@@ -43,7 +43,7 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.btn_edit_intro_keyword).setOnClickListener {
             val editText = EditText(this)
             AlertDialog.Builder(this)
-                .setTitle("소개 키워드 수정")
+                .setTitle("소개 키워드 수정1")
                 .setView(editText)
                 .setPositiveButton("저장") { dialog, which ->
                     val newKeyword = editText.text.toString()
