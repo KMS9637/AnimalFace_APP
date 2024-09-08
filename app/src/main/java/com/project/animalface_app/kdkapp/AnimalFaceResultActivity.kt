@@ -9,6 +9,12 @@ import com.project.animalface_app.R
 
 class AnimalFaceResultActivity : AppCompatActivity() {
 
+    companion object {
+        const val EXTRA_PREDICTED_CLASS_LABEL = "predictedClassLabel"
+        const val EXTRA_CONFIDENCE = "confidence"
+        const val EXTRA_IMAGE_URL = "imageUrl"
+    }
+
     private lateinit var resultImageView: ImageView
     private lateinit var resultTextView: TextView
 
@@ -21,15 +27,15 @@ class AnimalFaceResultActivity : AppCompatActivity() {
         resultTextView = findViewById(R.id.result_text)
 
         // 인텐트로부터 받은 데이터를 처리
-        val predictedClassLabel = intent.getStringExtra("predictedClassLabel")
-        val confidence = intent.getDoubleExtra("confidence", 0.0)
-        val imageUrl = intent.getStringExtra("imageUrl") // 서버에서 받은 이미지 URL (선택사항)
+        val predictedClassLabel = intent.getStringExtra(EXTRA_PREDICTED_CLASS_LABEL)
+        val confidence = intent.getDoubleExtra(EXTRA_CONFIDENCE, 0.0)
+        val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL) // 서버에서 받은 이미지 URL (선택사항)
 
         // 결과 텍스트를 설정
         resultTextView.text = "결과: $predictedClassLabel\n정확도: ${formatToPercentage(confidence)}"
 
-        // 결과값에 따른 이미지 설정
-        if (imageUrl != null) {
+        // Glide를 사용하여 이미지 로드
+        if (imageUrl != null && imageUrl.isNotBlank()) {
             // 서버에서 받은 이미지 URL을 Glide로 로딩
             Glide.with(this)
                 .load(imageUrl)
@@ -37,9 +43,11 @@ class AnimalFaceResultActivity : AppCompatActivity() {
                 .error(R.drawable.user_profile_)
                 .into(resultImageView)
         } else {
-            // 로컬 이미지 리소스 사용
+            // 로컬 이미지 리소스를 Glide로 로딩
             val resultImageResource = getImageResource(predictedClassLabel)
-            resultImageView.setImageResource(resultImageResource)
+            Glide.with(this)
+                .load(resultImageResource)
+                .into(resultImageView)
         }
     }
 
