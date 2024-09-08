@@ -12,15 +12,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.appliances.recycle.network.MyApplication
+import androidx.lifecycle.lifecycleScope
 import com.project.animalface_app.R
 import com.project.animalface_app.databinding.ActivityAnimalFaceBinding
 import com.project.animalface_app.kdkapp.dto.PredictionResult
 import com.project.animalface_app.kdkapp.network.INetworkService
+import com.project.animalface_app.kdkapp.network.MyApplication
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -50,6 +49,9 @@ class AnimalFaceActivity : AppCompatActivity() {
         // ImageView를 바인딩
         imageView = binding.resultUserImage
 
+        // API 서비스 초기화
+        apiService = MyApplication.getApiService()
+
         // 갤러리에서 이미지 선택
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -57,22 +59,32 @@ class AnimalFaceActivity : AppCompatActivity() {
             val dataUri = result.data?.data
             if (dataUri != null) {
                 imageUri = dataUri
-                imageView.setImageURI(dataUri) // 선택된 이미지를 ImageView에 표시
+                imageView.setImageURI(dataUri)
+                Log.d("AnimalFaceActivity", "갤러리에서 선택된 이미지 URI: $imageUri")
+            } else {
+                Log.e("AnimalFaceActivity", "갤러리에서 이미지를 선택하지 않았습니다.")
             }
         }
 
         binding.galleryBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             requestGalleryLauncher.launch(intent)
+            Log.d("AnimalFaceActivity", "갤러리 버튼 클릭됨")
         }
 
         // 카메라로 이미지 캡처
         val requestCameraFileLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            val bitmap = BitmapFactory.decodeFile(filePath)
-            imageView.setImageBitmap(bitmap)
-            imageUri = Uri.fromFile(File(filePath)) // 촬영한 이미지의 URI 저장
+            if (result.resultCode == RESULT_OK) {
+                val bitmap = BitmapFactory.decodeFile(filePath)
+                imageView.setImageBitmap(bitmap)
+                imageUri = Uri.fromFile(File(filePath))
+                Log.d("AnimalFaceActivity", "카메라로 촬영된 이미지 URI: $imageUri")
+            } else {
+                Toast.makeText(this, "사진을 촬영하지 않았습니다.", Toast.LENGTH_SHORT).show()
+                Log.e("AnimalFaceActivity", "카메라로 사진 촬영 실패")
+            }
         }
 
         binding.cameraBtn.setOnClickListener {
@@ -84,27 +96,30 @@ class AnimalFaceActivity : AppCompatActivity() {
 
             val photoURI: Uri = FileProvider.getUriForFile(
                 this,
-                "com.project.animalface_app",
+                "${applicationContext.packageName}.fileprovider",
                 file
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             requestCameraFileLauncher.launch(intent)
+            Log.d("AnimalFaceActivity", "카메라 버튼 클릭됨")
         }
 
         // "테스트 실행" 버튼 클릭 시 서버로 이미지 전송 및 결과 액티비티로 이동
         binding.predictSendBtn.setOnClickListener {
             if (::imageUri.isInitialized) {
+                Log.d("AnimalFaceActivity", "테스트 실행 버튼 클릭됨, 이미지 URI: $imageUri")
                 processImage(imageUri)
             } else {
                 Toast.makeText(this, "이미지를 선택하세요.", Toast.LENGTH_SHORT).show()
+                Log.e("AnimalFaceActivity", "이미지 URI가 초기화되지 않았습니다.")
             }
         }
     }
 
     // 이미지 처리 후 서버로 전송하는 함수
     private fun processImage(uri: Uri) {
-        GlobalScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val bitmap = getResizedBitmap(uri, 200, 200) // 200x200 크기로 축소
                 val imageBytes = bitmapToByteArray(bitmap)
@@ -114,6 +129,7 @@ class AnimalFaceActivity : AppCompatActivity() {
 
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e("AnimalFaceActivity", "이미지 처리 중 오류 발생: ${e.message}")
             }
         }
     }
@@ -142,7 +158,6 @@ class AnimalFaceActivity : AppCompatActivity() {
 
     // 서버로 이미지 전송 후 결과를 받는 함수
     private fun uploadData(profileImage: MultipartBody.Part) {
-        val apiService = (applicationContext as MyApplication).getApiService()
         val call = apiService.predictImage(profileImage)
 
         call.enqueue(object : Callback<PredictionResult> {
@@ -150,18 +165,21 @@ class AnimalFaceActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val result = response.body()
                     result?.let {
+                        Log.d("AnimalFaceActivity", "서버 응답: ${it.predictedClassLabel}")
                         val intent = Intent(this@AnimalFaceActivity, AnimalFaceResultActivity::class.java)
                         intent.putExtra("predictedClassLabel", it.predictedClassLabel)
                         intent.putExtra("confidence", it.confidence)
                         startActivity(intent)
                     }
+                } else {
+                    Log.e("AnimalFaceActivity", "서버 응답 실패: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<PredictionResult>, t: Throwable) {
                 Toast.makeText(this@AnimalFaceActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("AnimalFaceActivity", "네트워크 오류: ${t.message}")
             }
         })
     }
-
 }
