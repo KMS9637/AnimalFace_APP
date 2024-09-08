@@ -8,10 +8,10 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
-interface ImageUploadApi {
+interface INetworkService {
     @Multipart
     @POST("/classify")
-    fun uploadImage(
+    fun predictImage(
         @Part image: MultipartBody.Part
     ): Call<PredictionResult>
 

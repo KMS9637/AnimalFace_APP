@@ -18,6 +18,7 @@ import com.appliances.recycle.network.MyApplication
 import com.project.animalface_app.R
 import com.project.animalface_app.databinding.ActivityAnimalFaceBinding
 import com.project.animalface_app.kdkapp.dto.PredictionResult
+import com.project.animalface_app.kdkapp.network.INetworkService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,6 +40,7 @@ class AnimalFaceActivity : AppCompatActivity() {
     private lateinit var filePath: String
     private lateinit var imageUri: Uri
     private lateinit var imageView: ImageView
+    private lateinit var apiService: INetworkService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +84,7 @@ class AnimalFaceActivity : AppCompatActivity() {
 
             val photoURI: Uri = FileProvider.getUriForFile(
                 this,
-                "com.project.animalface_app",  // 패키지 이름을 직접 사용
+                "com.project.animalface_app",
                 file
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -91,7 +93,7 @@ class AnimalFaceActivity : AppCompatActivity() {
         }
 
         // "테스트 실행" 버튼 클릭 시 서버로 이미지 전송 및 결과 액티비티로 이동
-        binding.startTestBtn.setOnClickListener {
+        binding.predictSendBtn.setOnClickListener {
             if (::imageUri.isInitialized) {
                 processImage(imageUri)
             } else {
@@ -139,7 +141,7 @@ class AnimalFaceActivity : AppCompatActivity() {
     }
 
     // 서버로 이미지 전송 후 결과를 받는 함수
-    private fun uploadData(profileImage: MultipartBody.Part?) {
+    private fun uploadData(profileImage: MultipartBody.Part) {
         val apiService = (applicationContext as MyApplication).getApiService()
         val call = apiService.predictImage(profileImage)
 
@@ -161,4 +163,5 @@ class AnimalFaceActivity : AppCompatActivity() {
             }
         })
     }
+
 }
