@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.project.animalface_app.R
+import android.webkit.URLUtil
 
 class AnimalFaceResultActivity : AppCompatActivity() {
 
@@ -27,27 +28,29 @@ class AnimalFaceResultActivity : AppCompatActivity() {
         resultTextView = findViewById(R.id.result_text)
 
         // 인텐트로부터 받은 데이터를 처리
-        val predictedClassLabel = intent.getStringExtra(EXTRA_PREDICTED_CLASS_LABEL)
+        val predictedClassLabel = intent.getStringExtra(EXTRA_PREDICTED_CLASS_LABEL) ?: "알 수 없음"
         val confidence = intent.getDoubleExtra(EXTRA_CONFIDENCE, 0.0)
         val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL) // 서버에서 받은 이미지 URL (선택사항)
 
         // 결과 텍스트를 설정
-        resultTextView.text = "결과: $predictedClassLabel\n정확도: ${formatToPercentage(confidence)}"
+        if (predictedClassLabel == "알 수 없음") {
+            resultTextView.text = "결과를 가져올 수 없습니다."
+        } else {
+            resultTextView.text = "결과: $predictedClassLabel\n정확도: ${formatToPercentage(confidence)}"
+        }
 
         // Glide를 사용하여 이미지 로드
-        if (imageUrl != null && imageUrl.isNotBlank()) {
+        if (imageUrl != null && URLUtil.isValidUrl(imageUrl)) {
             // 서버에서 받은 이미지 URL을 Glide로 로딩
             Glide.with(this)
                 .load(imageUrl)
                 .placeholder(R.drawable.loading_image)
                 .error(R.drawable.user_profile_)
+                .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.ALL) // 캐시 사용
                 .into(resultImageView)
         } else {
-            // 로컬 이미지 리소스를 Glide로 로딩
-            val resultImageResource = getImageResource(predictedClassLabel)
-            Glide.with(this)
-                .load(resultImageResource)
-                .into(resultImageView)
+            // 로컬 이미지 리소스를 직접 설정
+            resultImageView.setImageResource(getImageResource(predictedClassLabel))
         }
     }
 
