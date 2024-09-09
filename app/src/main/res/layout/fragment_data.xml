@@ -22,7 +22,6 @@
         android:layout_marginStart="16dp"
         android:layout_gravity="start"/>
 
-    <!-- 데이터 표시할 부분 -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"

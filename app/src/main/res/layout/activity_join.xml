@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +29,6 @@
             android:textStyle="bold"/>
     </RelativeLayout>
 
-    <!-- Form Group -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,7 +98,6 @@
             android:layout_marginTop="24dp"/>
     </LinearLayout>
 
-    <!-- Footer -->
     <TextView
         android:id="@+id/footer_text"
         android:layout_width="match_parent"

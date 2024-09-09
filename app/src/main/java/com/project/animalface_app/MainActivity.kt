@@ -12,12 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
-import com.project.animalface_app.kdkapp.AnimalFaceActivity
-import com.project.animalface_app.kmsapp.LoginActivity
-import com.project.animalface_app.ksyapp.NoticeMainActivity
-import com.project.animalface_app.ksyapp.SearchActivity
-import com.project.animalface_app.ohjapp.ksyAPI.CreateGameMainActivity
-import com.project.animalface_app.kmsapp.ProfileActivity
+import com.project.animalface_app.createGameAPI.CreateGameMainActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -44,26 +39,21 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Initialize UI components
         val menuIcon: CheckBox = findViewById(R.id.menuicon)
         val sidebar: View = findViewById(R.id.sidebar)
         val menuIconLine1: View = findViewById(R.id.menuIconLine1)
         val menuIconLine2: View = findViewById(R.id.menuIconLine2)
         val menuIconLine3: View = findViewById(R.id.menuIconLine3)
 
-        // Set up sidebar toggle functionality with animations
         menuIcon.setOnCheckedChangeListener { _, isChecked ->
             toggleSidebar(isChecked, sidebar, menuIconLine1, menuIconLine2, menuIconLine3)
         }
 
-        // Set up sidebar menu item click listeners
         setupMenuClickListeners()
 
-        // Set up logo and myPage click listeners
         setupHeaderClickListeners()
     }
 
-    // Toggle sidebar open/close with animations
     private fun toggleSidebar(
         isChecked: Boolean,
         sidebar: View,
@@ -78,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Open the sidebar with animation
     private fun openSidebar(
         sidebar: View,
         menuIconLine1: View,
@@ -93,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         isSidebarOpen = true
     }
 
-    // Close the sidebar with animation
     private fun closeSidebar(
         sidebar: View,
         menuIconLine1: View,
@@ -110,7 +98,6 @@ class MainActivity : AppCompatActivity() {
         isSidebarOpen = false
     }
 
-    // Setup click listeners for sidebar menu items
     private fun setupMenuClickListeners() {
         val menuItem1: TextView = findViewById(R.id.menu_item_1)
         val menuItem2: TextView = findViewById(R.id.menu_item_2)
@@ -128,27 +115,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         menuItem3.setOnClickListener {
-            // "나의 보따리" 클릭 시 ProfileEditActivity로 이동
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
         menuItem4.setOnClickListener {
-            // "로그인" 클릭 시 ProfileEditActivity로 이동
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
         menuItem5.setOnClickListener {
-            // "로그인" 클릭 시 ProfileEditActivity로 이동
             val intent = Intent(this, AnimalFaceActivity::class.java)
             startActivity(intent)
         }
     }
 
-    // Setup click listeners for header elements like logo and myPage
     private fun setupHeaderClickListeners() {
         val logo: ImageView = findViewById(R.id.logo)
         logo.setOnClickListener {
-            // Define actions for logo click
         }
     }
 }
