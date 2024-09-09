@@ -66,8 +66,11 @@ class NoticeMainActivity : AppCompatActivity() {
 
         findViewById<LinearLayout>(R.id.noticeUI)?.visibility = View.GONE
 
-        showFragment(fragment)
+        if (supportFragmentManager.findFragmentByTag("DataFragment") == null) {
+            showFragment(fragment)
+        }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun fetchNotices() {
@@ -75,21 +78,25 @@ class NoticeMainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<Notice>>, response: Response<List<Notice>>) {
                 if (response.isSuccessful) {
                     val notices = response.body() ?: emptyList()
+                    Log.d("FetchNotices", "Notices fetched successfully: ${notices.size} items")
                     runOnUiThread {
                         adapter.updateData(notices)
                     }
                 } else {
-                    Log.e("FetchNotices", "Error: ${response.message()}")
+                    Log.e("FetchNotices", "야 여기 에러남: ${response.code()} ${response.message()}")
+                    Log.e("FetchNotices", "Response body: ${response.errorBody()?.string()}")
                     showToast("Error: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<Notice>>, t: Throwable) {
-                Log.e("FetchNotices", "Failed to fetch data: ${t.message}")
+                Log.e("FetchNotices", "Failed to fetch data: ${t.message}", t)
                 showToast("Failed to fetch data: ${t.message}")
             }
         })
     }
+
+
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -114,7 +121,6 @@ class NoticeMainActivity : AppCompatActivity() {
         createGameButton.setOnClickListener {
             val intent = Intent(this, CreateGameMainActivity::class.java)
             startActivity(intent)
-
         }
     }
 }

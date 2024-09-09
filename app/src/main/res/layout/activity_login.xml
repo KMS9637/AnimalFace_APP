@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <android.widget.Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:background="@android:color/transparent"
+            android:text="&#60;"
+            android:onClick="onBackPressed"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="로그인"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Form Group -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/userid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="아이디 입력"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호 입력"
+            android:inputType="textPassword"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+<!--            <CheckBox-->
+<!--                android:id="@+id/save_login"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="로그인 저장"-->
+<!--                android:checked="true" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/find_password"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="비밀번호 찾기"-->
+<!--                android:textColor="@android:color/holo_blue_light"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:onClick="onFindPasswordClick" />-->
+        </LinearLayout>
+
+        <android.widget.Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:background="@color/black"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="24dp"
+            android:onClick="onLoginClick" />
+
+        <TextView
+            android:id="@+id/sns_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SNS로 시작하기"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_kakao_login"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="카카오 계정으로 로그인"-->
+<!--            android:background="@color/black"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:onClick="onKakaoLoginClick" />-->
+
+        <ImageButton
+            android:id="@+id/btn_kakao_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="카카오 계정으로 로그인"
+            android:onClick="onKakaoLoginClick"
+            android:scaleType="centerInside"
+            android:src="@drawable/kakao_logo" />
+
+        <android.widget.Button
+            android:id="@+id/btn_email_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:background="@color/black"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp"
+            android:onClick="onEmailSignupClick" />
+    </LinearLayout>
+
+    <!-- Footer -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인(가입) 시 이용약관 및 개인정보 취급방침에 동의하는 것으로 간주합니다."
+        android:gravity="center"
+        android:layout_marginTop="32dp" />
+</LinearLayout>
