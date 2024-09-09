@@ -27,7 +27,6 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_back_arrow" />
 
-            <!-- 동물상 테스트 제목 -->
             <TextView
                 android:id="@+id/animal_test_title"
                 android:layout_width="wrap_content"
@@ -38,7 +37,6 @@
                 android:textSize="24sp"
                 android:textColor="@android:color/black" />
 
-            <!-- 결과 이미지 출력 -->
             <ImageView
                 android:id="@+id/cameraImg"
                 android:layout_width="match_parent"
@@ -49,7 +47,6 @@
                 android:maxHeight="200dp"
                 android:src="@drawable/user_profile_" />
 
-            <!-- 결과 텍스트 추가 -->
             <TextView
                 android:id="@+id/result_text"
                 android:layout_width="wrap_content"
