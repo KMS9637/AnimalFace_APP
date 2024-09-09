@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -11,7 +12,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 //import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
-import com.project.animalface_app.kmsapp.ProfileActivity
+import com.project.animalface_app.ksyapp.NoticeMainActivity
+import com.project.animalface_app.ksyapp.SearchActivity
+import com.project.animalface_app.ohjapp.ksyAPI.CreateGameMainActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,9 +26,20 @@ class MainActivity : AppCompatActivity() {
 //        installSplashScreen()
         setContentView(R.layout.activity_main)
 
-        // Inflate the content layout into the main activity layout
         val contentFrame: FrameLayout = findViewById(R.id.content)
         LayoutInflater.from(this).inflate(R.layout.activity_main2, contentFrame, true)
+
+        val createGame: Button = findViewById(R.id.createGame)
+        createGame.setOnClickListener {
+            val intent = Intent(this, CreateGameMainActivity::class.java)
+            startActivity(intent)
+        }
+
+        val searchButton = findViewById<ImageView>(R.id.searchButton)
+        searchButton.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
 
         // Initialize UI components
         val menuIcon: CheckBox = findViewById(R.id.menuicon)
@@ -99,19 +114,19 @@ class MainActivity : AppCompatActivity() {
         val menuItem3: TextView = findViewById(R.id.menu_item_3)
 
         menuItem1.setOnClickListener {
-            // Define actions for menu item 1 click
+            val intent = Intent(this, NoticeMainActivity::class.java)
+            startActivity(intent)
         }
 
         menuItem2.setOnClickListener {
-            // Define actions for menu item 2 click
+            val intent = Intent(this, CreateGameMainActivity::class.java)
+            startActivity(intent)
         }
-
         menuItem3.setOnClickListener {
             // "나의 보따리" 클릭 시 ProfileEditActivity로 이동
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     // Setup click listeners for header elements like logo and myPage
@@ -119,11 +134,6 @@ class MainActivity : AppCompatActivity() {
         val logo: ImageView = findViewById(R.id.logo)
         logo.setOnClickListener {
             // Define actions for logo click
-        }
-
-        val myPage: ImageView = findViewById(R.id.mypage)
-        myPage.setOnClickListener {
-            // Define actions for myPage click
         }
     }
 }

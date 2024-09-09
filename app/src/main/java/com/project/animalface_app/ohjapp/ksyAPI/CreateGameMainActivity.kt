@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.project.animalface_app.R
 import com.project.animalface_app.ksyapp.RetrofitClient
@@ -24,6 +25,11 @@ class CreateGameMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_game_main)
+
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
 
         // Retrofit 인스턴스와 API 서비스 생성
         apiService = RetrofitClient.instance.create(GameApiService::class.java)

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_horizontal"
-    android:background="@color/white">
+    android:padding="16dp">
 
-    <!-- .inter-text -->
     <TextView
         android:id="@+id/inter_text"
         android:layout_width="wrap_content"
@@ -22,25 +18,22 @@
         android:paddingTop="20dp"
         android:paddingStart="24dp"
         android:paddingBottom="16dp"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="center"
+        android:layout_gravity="center|top"
         android:elevation="4dp"/>
 
-    <!-- .rectangle-container -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:paddingHorizontal="10dp">
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="70dp">
 
-        <!-- .large-rectangle -->
         <Button
             android:id="@+id/large_rectangle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="16dp"
             android:paddingVertical="40dp"
             android:background="@drawable/large_rectangle_background"
             android:text="동물상 테스트"
@@ -49,7 +42,6 @@
             android:textStyle="bold"
             android:stateListAnimator="@null"/>
 
-        <!-- .small-rectangle-container -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +51,6 @@
             android:weightSum="2"
             android:paddingHorizontal="5dp">
 
-            <!-- .small-rectangle 1 -->
             <Button
                 android:id="@+id/small_rectangle1"
                 android:layout_width="0dp"
@@ -72,9 +63,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:stateListAnimator="@null" />
+                android:stateListAnimator="@null"/>
 
-            <!-- .small-rectangle 2 -->
             <Button
                 android:id="@+id/small_rectangle2"
                 android:layout_width="0dp"
@@ -87,20 +77,21 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:stateListAnimator="@null" />
+                android:stateListAnimator="@null"/>
         </LinearLayout>
-
-        <!-- .large-rectangle (테스트 만들기) -->
         <Button
-            android:id="@+id/create_game"
+            android:id="@+id/createGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="40dp"
             android:background="@drawable/large_rectangle_background"
+            android:clickable="true"
+            android:enabled="true"
+            android:focusable="true"
+            android:paddingVertical="40dp"
             android:text="테스트 만들기"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:stateListAnimator="@null" />
+            android:textStyle="bold"/>
+
     </LinearLayout>
 </LinearLayout>

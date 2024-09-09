@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,15 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalFace_APP"
         android:usesCleartextTraffic="true"
-        android:name=".kmsapp.retrofit.MyApplication"
-        tools:targetApi="31" >
-
-
-        <!-- Google Mobile Ads SDK 초기화에 필요한 메타데이터 추가 -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
-<!--            android:value="ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX" />-->
-
+        tools:targetApi="31">
+        <activity
+            android:name=".ksyapp.SearchActivity"
+            android:exported="true" />
 
         <activity
             android:name=".ksyapp.SplashActivity"
@@ -50,7 +45,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
