@@ -16,7 +16,6 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.project.animalface_app.R
 import com.project.animalface_app.databinding.ActivityAnimalFaceBinding
-import com.project.animalface_app.kdkapp.dto.PredictionResult
 import com.project.animalface_app.kdkapp.network.INetworkService
 import com.project.animalface_app.kdkapp.network.MyApplication
 import kotlinx.coroutines.Dispatchers
@@ -48,13 +47,10 @@ class AnimalFaceActivity : AppCompatActivity() {
         binding = ActivityAnimalFaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ImageView를 바인딩
         imageView = binding.resultUserImage
-
-        // API 서비스 초기화
         apiService = MyApplication.getApiService()
 
-        // 갤러리에서 이미지 선택
+        // 갤러리에서 이미지 선택하기 위한 ActivityResultLauncher
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -68,13 +64,7 @@ class AnimalFaceActivity : AppCompatActivity() {
             }
         }
 
-        binding.galleryBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            requestGalleryLauncher.launch(intent)
-            Log.d("AnimalFaceActivity", "갤러리 버튼 클릭됨")
-        }
-
-        // 카메라로 이미지 캡처
+        // 카메라로 촬영한 이미지를 처리하기 위한 ActivityResultLauncher
         val requestCameraFileLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -89,6 +79,14 @@ class AnimalFaceActivity : AppCompatActivity() {
             }
         }
 
+        // 갤러리 버튼 클릭 시
+        binding.galleryBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            requestGalleryLauncher.launch(intent)
+            Log.d("AnimalFaceActivity", "갤러리 버튼 클릭됨")
+        }
+
+        // 카메라 버튼 클릭 시
         binding.cameraBtn.setOnClickListener {
             val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -107,7 +105,7 @@ class AnimalFaceActivity : AppCompatActivity() {
             Log.d("AnimalFaceActivity", "카메라 버튼 클릭됨")
         }
 
-        // "테스트 실행" 버튼 클릭 시 서버로 이미지 전송 및 결과 액티비티로 이동
+        // 예측 및 전송 버튼 클릭 시
         binding.predictSendBtn.setOnClickListener {
             if (::imageUri.isInitialized) {
                 Log.d("AnimalFaceActivity", "테스트 실행 버튼 클릭됨, 이미지 URI: $imageUri")
@@ -119,11 +117,11 @@ class AnimalFaceActivity : AppCompatActivity() {
         }
     }
 
-    // 이미지 처리 후 서버로 전송하는 함수
+    // 이미지 처리 메서드
     private fun processImage(uri: Uri) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val bitmap = getResizedBitmap(uri, 200, 200) // 200x200 크기로 축소
+                val bitmap = getResizedBitmap(uri, 200, 200)
                 val imageBytes = bitmapToByteArray(bitmap)
                 val profileImagePart = createMultipartBodyFromBytes(imageBytes)
 
@@ -136,7 +134,7 @@ class AnimalFaceActivity : AppCompatActivity() {
         }
     }
 
-    // 이미지 크기 조정 및 비트맵 변환 함수
+    // 비트맵 크기 조정 메서드
     private suspend fun getResizedBitmap(uri: Uri, width: Int, height: Int): Bitmap {
         return withContext(Dispatchers.IO) {
             val inputStream = contentResolver.openInputStream(uri)
@@ -146,38 +144,36 @@ class AnimalFaceActivity : AppCompatActivity() {
         }
     }
 
+    // 비트맵을 바이트 배열로 변환하는 메서드
     private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
         return byteArrayOutputStream.toByteArray()
     }
 
-    // MultipartBody 생성
+    // MultipartBody.Part 생성 메서드
     private fun createMultipartBodyFromBytes(imageBytes: ByteArray): MultipartBody.Part {
         val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageBytes)
         return MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
     }
 
-    // 서버로 이미지 전송 후 결과를 받는 함수
+    // 데이터 업로드 메서드
     private fun uploadData(profileImage: MultipartBody.Part) {
         val call = apiService.predictImage(profileImage)
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val responseBody = response.body()?.string() // 서버에서 받은 JSON 데이터를 문자열로 변환
+                    val responseBody = response.body()?.string()
 
-                    // JSON 데이터를 파싱
                     try {
                         val jsonObject = JSONObject(responseBody)
-                        // 서버의 응답에 맞춰 필드명을 수정
-                        val predictedClassLabel = jsonObject.getString("predictedClassLabel") // 예측 결과 레이블
-                        val confidence = jsonObject.getDouble("confidence") // 정확도
+                        val predictedClassLabel = jsonObject.getString("predictedClassLabel")
+                        val confidence = jsonObject.getDouble("confidence")
 
                         Log.d("AnimalFaceActivity", "Response Body: $responseBody")
                         Log.d("AnimalFaceActivity", "서버 응답: $predictedClassLabel, 정확도: $confidence")
 
-                        // 결과 액티비티로 이동
                         val intent = Intent(this@AnimalFaceActivity, AnimalFaceResultActivity::class.java)
                         intent.putExtra("predictedClassLabel", predictedClassLabel)
                         intent.putExtra("confidence", confidence)
@@ -197,5 +193,4 @@ class AnimalFaceActivity : AppCompatActivity() {
             }
         })
     }
-
 }
