@@ -44,6 +44,9 @@ android {
 
 dependencies {
 
+    //splash
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
     //뷰페이져2 추가
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     // 코루틴 추가
