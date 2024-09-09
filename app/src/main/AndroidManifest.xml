@@ -39,6 +39,10 @@
 
         <!-- 액티비티 설정 -->
         <activity
+            android:name=".kdkapp.AnimalFaceResultActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".kdkapp.AnimalFaceActivity"
             android:exported="true" />
 
@@ -60,6 +64,7 @@
 
         <!-- 주석 처리된 액티비티 -->
         <!-- <activity android:name=".kdkapp.CreateGameActivity" android:exported="true" /> -->
+<!--        <activity android:name=".kdkapp.AnimalFaceResultActivity" />-->
 
         <activity
             android:name=".ksyapp.NoticeMainActivity"

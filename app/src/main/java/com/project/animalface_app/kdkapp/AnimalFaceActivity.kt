@@ -25,6 +25,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -160,26 +162,40 @@ class AnimalFaceActivity : AppCompatActivity() {
     private fun uploadData(profileImage: MultipartBody.Part) {
         val call = apiService.predictImage(profileImage)
 
-        call.enqueue(object : Callback<PredictionResult> {
-            override fun onResponse(call: Call<PredictionResult>, response: Response<PredictionResult>) {
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val result = response.body()
-                    result?.let {
-                        Log.d("AnimalFaceActivity", "서버 응답: ${it.predictedClassLabel}")
+                    val responseBody = response.body()?.string() // 서버에서 받은 JSON 데이터를 문자열로 변환
+
+                    // JSON 데이터를 파싱
+                    try {
+                        val jsonObject = JSONObject(responseBody)
+                        // 서버의 응답에 맞춰 필드명을 수정
+                        val predictedClassLabel = jsonObject.getString("predictedClassLabel") // 예측 결과 레이블
+                        val confidence = jsonObject.getDouble("confidence") // 정확도
+
+                        Log.d("AnimalFaceActivity", "Response Body: $responseBody")
+                        Log.d("AnimalFaceActivity", "서버 응답: $predictedClassLabel, 정확도: $confidence")
+
+                        // 결과 액티비티로 이동
                         val intent = Intent(this@AnimalFaceActivity, AnimalFaceResultActivity::class.java)
-                        intent.putExtra("predictedClassLabel", it.predictedClassLabel)
-                        intent.putExtra("confidence", it.confidence)
+                        intent.putExtra("predictedClassLabel", predictedClassLabel)
+                        intent.putExtra("confidence", confidence)
                         startActivity(intent)
+
+                    } catch (e: Exception) {
+                        Log.e("AnimalFaceActivity", "JSON 파싱 오류: ${e.message}")
                     }
                 } else {
                     Log.e("AnimalFaceActivity", "서버 응답 실패: ${response.errorBody()?.string()}")
                 }
             }
 
-            override fun onFailure(call: Call<PredictionResult>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(this@AnimalFaceActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("AnimalFaceActivity", "네트워크 오류: ${t.message}")
             }
         })
     }
+
 }
