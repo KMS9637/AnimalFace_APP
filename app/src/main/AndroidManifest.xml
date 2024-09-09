@@ -1,26 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.project.animalface_app">
+
+    <!-- 필요한 퍼미션들 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <!-- Android 33(API 33) 이하에서 미디어 읽기 권한 요청 -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:targetApi="33" />
+    <!-- 카메라 및 인터넷 권한 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalFace_APP"
+        android:usesCleartextTraffic="true"
+        android:name=".kmsapp.retrofit.MyApplication"
         tools:targetApi="31">
+
+        <!-- 액티비티 설정 -->
+        <activity
+            android:name=".kdkapp.AnimalFaceResultActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".kdkapp.AnimalFaceActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ksyapp.SearchActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ksyapp.SplashActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ksyapp.Main2Activity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ohjapp.ksyAPI.CreateGameMainActivity"
+            android:exported="true" />
+
+        <!-- 주석 처리된 액티비티 -->
+        <!-- <activity android:name=".kdkapp.CreateGameActivity" android:exported="true" /> -->
+<!--        <activity android:name=".kdkapp.AnimalFaceResultActivity" />-->
+
+        <activity
+            android:name=".ksyapp.NoticeMainActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".kmsapp.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".kmsapp.ProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".kmsapp.JoinActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- FileProvider 설정 추가 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- 광고 메타 데이터 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
+    </application>
 </manifest>
