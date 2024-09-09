@@ -152,6 +152,25 @@
                     android:text="게임 만들기"
                     android:textSize="18sp"
                     android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/menu_item_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="나의 보따리"
+                    android:textSize="18sp"
+                    android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/menu_item_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="로그인"
+                    android:textSize="18sp"
+                    android:textColor="#000"/>
+
             </LinearLayout>
 
         </LinearLayout>
