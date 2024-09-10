@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.animalface_app">
 
-    <!-- 필요한 퍼미션들 -->
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Android 33(API 33) 이하에서 미디어 읽기 권한 요청 -->
+
     <uses-permission
         android:name="android.permission.READ_MEDIA_IMAGES"
         android:maxSdkVersion="32" />
@@ -19,10 +18,10 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:targetApi="33" />
-    <!-- 카메라 및 인터넷 권한 -->
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
 
     <application
@@ -35,50 +34,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimalFace_APP"
         android:usesCleartextTraffic="true"
-        android:name=".kmsapp.retrofit.MyApplication"
+        android:name=".retrofit.MyApplication"
         tools:targetApi="31">
 
-        <!-- 액티비티 설정 -->
+
         <activity
-            android:name=".kdkapp.AnimalFaceResultActivity"
+            android:name=".AnimalFaceResultActivity"
             android:exported="true" />
 
         <activity
-            android:name=".kdkapp.AnimalFaceActivity"
+            android:name=".AnimalFaceActivity"
             android:exported="true" />
 
         <activity
-            android:name=".ksyapp.SearchActivity"
+            android:name=".SearchActivity"
             android:exported="true" />
 
         <activity
-            android:name=".ksyapp.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true" />
 
         <activity
-            android:name=".ksyapp.Main2Activity"
+            android:name=".Main2Activity"
             android:exported="true" />
 
         <activity
-            android:name=".ohjapp.ksyAPI.CreateGameMainActivity"
-            android:exported="true" />
-
-        <!-- 주석 처리된 액티비티 -->
-        <!-- <activity android:name=".kdkapp.CreateGameActivity" android:exported="true" /> -->
-<!--        <activity android:name=".kdkapp.AnimalFaceResultActivity" />-->
-
-        <activity
-            android:name=".ksyapp.NoticeMainActivity"
+            android:name=".createGameAPI.CreateGameMainActivity"
             android:exported="true" />
 
         <activity
-            android:name=".kmsapp.LoginActivity"
+            android:name=".NoticeMainActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".kmsapp.ProfileActivity"
+            android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".kmsapp.JoinActivity"
+            android:name=".JoinActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -89,7 +84,6 @@
             </intent-filter>
         </activity>
 
-        <!-- FileProvider 설정 추가 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -100,7 +94,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- 광고 메타 데이터 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />

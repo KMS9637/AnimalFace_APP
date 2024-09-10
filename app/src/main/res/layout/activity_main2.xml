@@ -40,7 +40,8 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:stateListAnimator="@null"/>
+            android:stateListAnimator="@null"
+            android:clickable="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +64,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:stateListAnimator="@null"/>
+                android:stateListAnimator="@null"
+                android:clickable="true"/>
 
             <Button
                 android:id="@+id/small_rectangle2"
@@ -77,21 +79,20 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:stateListAnimator="@null"/>
+                android:stateListAnimator="@null"
+                android:clickable="true"/>
         </LinearLayout>
         <Button
             android:id="@+id/createGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/large_rectangle_background"
-            android:clickable="true"
-            android:enabled="true"
-            android:focusable="true"
             android:paddingVertical="40dp"
             android:text="테스트 만들기"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:clickable="true"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- 상단 툴바 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +32,6 @@
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <!-- 닉네임 설정 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +65,6 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <!-- 소개 키워드 설정 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +98,6 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <!-- 삭제 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
