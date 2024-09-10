@@ -51,7 +51,7 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
+
     implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -63,7 +63,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
-    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+
 
     implementation(libs.androidx.paging.common.android)
     implementation(libs.androidx.paging.runtime.ktx)
@@ -75,7 +75,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.3.6")
 
     implementation("androidx.webkit:webkit:1.8.0")
-
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
