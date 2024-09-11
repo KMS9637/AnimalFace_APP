@@ -57,8 +57,11 @@ class AnimalFaceActivity : AppCompatActivity() {
         imageView = binding.resultUserImage
         apiService = MyApplication.getApiService()
 
-        checkPermissions()
+        binding.backButton.setOnClickListener {
+            finish()
+        }
 
+        checkPermissions()
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
