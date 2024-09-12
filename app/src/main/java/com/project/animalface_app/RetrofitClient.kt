@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 object RetrofitClient {
-    private const val BASE_URL = "http://10.100.201.42:8080/"
+    private const val BASE_URL = "http://10.100.201.41:8080/"
 
     val instance: Retrofit by lazy {
         val gson = GsonBuilder()
