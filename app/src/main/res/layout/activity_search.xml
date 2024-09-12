@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -14,18 +15,22 @@
         android:contentDescription="@string/back"
         android:scaleType="fitCenter"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="0dp"
+        android:layout_gravity="start"/>
 
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="검색어를 입력하세요" />
+        android:queryHint="검색어를 입력하세요"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>
