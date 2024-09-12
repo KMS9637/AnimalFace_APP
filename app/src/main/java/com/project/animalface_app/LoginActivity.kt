@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
                 Log.d("lsy", "loginResponse.memberNo : ${loginResponse.memberId}")
                 saveMemberNo(loginResponse.memberId)
+                saveLoginStatus(true)
                 Log.d("LoginActivity", "서버에서 받은 회원 번호: ${loginResponse.memberId}")
 
                 startActivity(Intent(this, MainActivity::class.java))
@@ -68,6 +69,12 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
     }
 
     private fun saveMemberNo(memberId: String) {

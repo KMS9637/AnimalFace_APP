@@ -1,6 +1,8 @@
 package com.project.animalface_app
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,11 +20,16 @@ import com.project.animalface_app.createGameAPI.CreateGameMainActivity
 class MainActivity : AppCompatActivity() {
 
     private var isSidebarOpen = false
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main)
+
+        sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
+        updateMenuItemsVisibility() // 로그인 상태에 따라 메뉴 항목 업데이트
 
         val contentFrame: FrameLayout = findViewById(R.id.content)
         LayoutInflater.from(this).inflate(R.layout.activity_main2, contentFrame, true)
@@ -106,16 +113,16 @@ class MainActivity : AppCompatActivity() {
         val menuItem5: TextView = findViewById(R.id.menu_item_5)
 
         menuItem1.setOnClickListener {
-            val intent = Intent(this, NoticeMainActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
         menuItem2.setOnClickListener {
-            val intent = Intent(this, CreateGameMainActivity::class.java)
+            val intent = Intent(this, NoticeMainActivity::class.java)
             startActivity(intent)
         }
         menuItem3.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, CreateGameMainActivity::class.java)
             startActivity(intent)
         }
         menuItem4.setOnClickListener {
@@ -132,5 +139,30 @@ class MainActivity : AppCompatActivity() {
         val logo: ImageView = findViewById(R.id.logo)
         logo.setOnClickListener {
         }
+    }
+
+    private fun handleLogout() {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", false)
+        editor.apply()
+
+        // 로그아웃 후 LoginActivity로 이동
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun updateMenuItemsVisibility() {
+        val menuItem4: TextView = findViewById(R.id.menu_item_4) // 로그인 메뉴
+        val menuItem1: TextView = findViewById(R.id.menu_item_1) // 프로필 메뉴
+
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        menuItem4.visibility = if (isLoggedIn) View.GONE else View.VISIBLE
+        menuItem1.visibility = if (isLoggedIn) View.VISIBLE else View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateMenuItemsVisibility() // 로그인 상태가 변경된 경우 업데이트
     }
 }
