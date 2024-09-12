@@ -169,6 +169,14 @@
                     android:textSize="18sp"
                     android:textColor="#000"/>
 
+                <TextView
+                    android:id="@+id/menu_item_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="로그아웃"
+                    android:textSize="18sp"
+                    android:padding="16dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isSidebarOpen = false
     private lateinit var sharedPreferences: SharedPreferences
+    private var loginTextView: TextView? = null  // nullable로 변경
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         val contentFrame: FrameLayout = findViewById(R.id.content)
         LayoutInflater.from(this).inflate(R.layout.activity_main2, contentFrame, true)
+
+        loginTextView = findViewById(R.id.login)
 
         val createGame: Button = findViewById(R.id.createGame)
         createGame.setOnClickListener {
@@ -57,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupMenuClickListeners()
-
         setupHeaderClickListeners()
     }
 
@@ -111,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         val menuItem3: TextView = findViewById(R.id.menu_item_3)
         val menuItem4: TextView = findViewById(R.id.menu_item_4)
         val menuItem5: TextView = findViewById(R.id.menu_item_5)
+        val menuItemLogout: TextView = findViewById(R.id.menu_item_logout)
 
         menuItem1.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
@@ -133,6 +136,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AnimalFaceActivity::class.java)
             startActivity(intent)
         }
+        // 로그아웃 메뉴 클릭 시
+        menuItemLogout.setOnClickListener {
+            handleLogout();  // 로그아웃 처리
+        }
     }
 
     private fun setupHeaderClickListeners() {
@@ -146,8 +153,9 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("isLoggedIn", false)
         editor.apply()
 
-        // 로그아웃 후 LoginActivity로 이동
-        val intent = Intent(this, LoginActivity::class.java)
+        // 로그아웃 후 MainActivity로 이동
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
@@ -155,14 +163,23 @@ class MainActivity : AppCompatActivity() {
     private fun updateMenuItemsVisibility() {
         val menuItem4: TextView = findViewById(R.id.menu_item_4) // 로그인 메뉴
         val menuItem1: TextView = findViewById(R.id.menu_item_1) // 프로필 메뉴
+        val menuItemLogout: TextView = findViewById(R.id.menu_item_logout)
 
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         menuItem4.visibility = if (isLoggedIn) View.GONE else View.VISIBLE
         menuItem1.visibility = if (isLoggedIn) View.VISIBLE else View.GONE
+        menuItemLogout.visibility = if (isLoggedIn) View.VISIBLE else View.GONE
     }
 
     override fun onResume() {
         super.onResume()
         updateMenuItemsVisibility() // 로그인 상태가 변경된 경우 업데이트
+        updateLoginTextViewVisibility()
+    }
+
+    // 로그인 상태에 따라 TextView visibility 업데이트
+    private fun updateLoginTextViewVisibility() {
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        loginTextView?.visibility = if (isLoggedIn) View.GONE else View.VISIBLE
     }
 }
