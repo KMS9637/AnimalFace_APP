@@ -11,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private var isSidebarOpen = false
     private lateinit var sharedPreferences: SharedPreferences
     private var loginTextView: TextView? = null  // nullable로 변경
+    private lateinit var profileImageView: ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,19 @@ class MainActivity : AppCompatActivity() {
         LayoutInflater.from(this).inflate(R.layout.activity_main2, contentFrame, true)
 
         loginTextView = findViewById(R.id.login)
+        profileImageView = findViewById(R.id.profileImageView)
+
+        updateProfileImage() // 프로필 이미지 업데이트
 
         val createGame: Button = findViewById(R.id.createGame)
         createGame.setOnClickListener {
             val intent = Intent(this, CreateGameMainActivity::class.java)
             startActivity(intent)
+        }
+
+        profileImageView.setOnClickListener {
+            // 프로필 이미지 클릭 시 이미지 선택 다이얼로그 표시
+            showImagePickerDialog()
         }
 
         val searchButton = findViewById<ImageView>(R.id.searchButton)
@@ -181,5 +192,64 @@ class MainActivity : AppCompatActivity() {
     private fun updateLoginTextViewVisibility() {
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         loginTextView?.visibility = if (isLoggedIn) View.GONE else View.VISIBLE
+    }
+
+    // 프로필 이미지 업데이트
+    private fun updateProfileImage() {
+        val imageResId = sharedPreferences.getInt("profileImageResId", R.drawable.mainlogo)
+        profileImageView.setImageResource(imageResId)
+    }
+
+    // 이미지 선택 다이얼로그 표시
+    private fun showImagePickerDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_image_picker, null)
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Select Profile Image")
+            .setView(dialogView)
+            .create()
+
+        val image1 = dialogView.findViewById<ImageView>(R.id.image1)
+        val image2 = dialogView.findViewById<ImageView>(R.id.image2)
+        val image3 = dialogView.findViewById<ImageView>(R.id.image3)
+        val image4 = dialogView.findViewById<ImageView>(R.id.image4)  // 추가
+        val image5 = dialogView.findViewById<ImageView>(R.id.image5)  // 추가
+
+        image1.setOnClickListener {
+            saveSelectedImage(R.drawable.image1)
+            dialog.dismiss()
+        }
+
+        image2.setOnClickListener {
+            saveSelectedImage(R.drawable.image2)
+            dialog.dismiss()
+        }
+
+        image3.setOnClickListener {
+            saveSelectedImage(R.drawable.image3)
+            dialog.dismiss()
+        }
+
+        // 추가된 이미지 클릭 리스너
+        image4.setOnClickListener {
+            saveSelectedImage(R.drawable.image4)
+            dialog.dismiss()
+        }
+
+        image5.setOnClickListener {
+            saveSelectedImage(R.drawable.image5)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    // 선택한 이미지 저장
+    private fun saveSelectedImage(imageResId: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt("profileImageResId", imageResId)
+        editor.apply()
+
+        // 선택 후 프로필 이미지 업데이트
+        updateProfileImage()
     }
 }
