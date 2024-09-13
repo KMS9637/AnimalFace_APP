@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object MyApplication {
-    private val BASE_URL = "http://10.100.201.41:8080/" // 서버 주소를 설정
+    private val BASE_URL = "http://10.100.201.8:8080/" // 서버 주소를 설정
     private lateinit var apiService: INetworkService
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
