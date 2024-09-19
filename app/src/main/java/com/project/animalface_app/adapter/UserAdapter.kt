@@ -30,7 +30,7 @@ class UserAdapter : PagingDataAdapter<UserItem, UserAdapter.UserViewHolder>(DIFF
             binding.itemUsername.text = user.memberName
             binding.itemName.text = user.memberId
 
-            val imageUrl = "http://10.100.201.41:8080/api/users/${user.memberNo}/profileImage"
+            val imageUrl = "http://10.100.201.8:8080/api/users/${user.memberNo}/profileImage"
             Glide.with(binding.root.context)
                 .load(imageUrl)
                 .placeholder(R.drawable.user_basic)
