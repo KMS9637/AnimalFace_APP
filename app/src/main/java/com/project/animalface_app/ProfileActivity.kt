@@ -47,21 +47,7 @@ class ProfileActivity : AppCompatActivity() {
             LoginViewModel::class.java
         )
 
-        // 닉네임 수정 버튼 클릭 리스너 설정
-        findViewById<ImageButton>(R.id.btn_edit_nickname).setOnClickListener {
-            val editText = EditText(this)
-            AlertDialog.Builder(this)
-                .setTitle("닉네임 수정")
-                .setView(editText)
-                .setPositiveButton("저장") { dialog, which ->
-                    val newNickname = editText.text.toString()
-                    findViewById<TextView>(R.id.tv_nickname).text = newNickname
-                }
-                .setNegativeButton("취소", null)
-                .show()
-        }
 
-        // 계정 삭제 버튼 클릭 리스너 설정
         findViewById<ImageButton>(R.id.btn_delete_account).setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("계정 삭제")
@@ -80,7 +66,7 @@ class ProfileActivity : AppCompatActivity() {
                 .show()
         }
 
-        // 계정 삭제 결과에 대한 Observer 설정
+
         loginViewModel.deleteResult.observe(this) { success ->
             if (success) {
                 Toast.makeText(this, "회원 삭제 성공", Toast.LENGTH_SHORT).show()
@@ -91,7 +77,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        // 메인 화면으로 돌아가는 버튼 클릭 리스너 설정
+
         findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()

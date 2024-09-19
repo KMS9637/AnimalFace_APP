@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isSidebarOpen = false
     private lateinit var sharedPreferences: SharedPreferences
-    private var loginTextView: TextView? = null  // nullable로 변경
+    private var loginTextView: TextView? = null
     private lateinit var profileImageView: ImageView
 
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
-        updateMenuItemsVisibility() // 로그인 상태에 따라 메뉴 항목 업데이트
+        updateMenuItemsVisibility()
 
         val contentFrame: FrameLayout = findViewById(R.id.content)
         LayoutInflater.from(this).inflate(R.layout.activity_main2, contentFrame, true)
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         loginTextView = findViewById(R.id.login)
         profileImageView = findViewById(R.id.profileImageView)
 
-        updateProfileImage() // 프로필 이미지 업데이트
+        updateProfileImage()
 
         val createGame: Button = findViewById(R.id.createGame)
         createGame.setOnClickListener {
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         profileImageView.setOnClickListener {
-            // 프로필 이미지 클릭 시 이미지 선택 다이얼로그 표시
+
             showImagePickerDialog()
         }
 
@@ -147,9 +147,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AnimalFaceActivity::class.java)
             startActivity(intent)
         }
-        // 로그아웃 메뉴 클릭 시
+
         menuItemLogout.setOnClickListener {
-            handleLogout();  // 로그아웃 처리
+            handleLogout();
         }
     }
 
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("isLoggedIn", false)
         editor.apply()
 
-        // 로그아웃 후 MainActivity로 이동
+
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
@@ -184,23 +184,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateMenuItemsVisibility() // 로그인 상태가 변경된 경우 업데이트
+        updateMenuItemsVisibility()
         updateLoginTextViewVisibility()
     }
 
-    // 로그인 상태에 따라 TextView visibility 업데이트
+
     private fun updateLoginTextViewVisibility() {
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         loginTextView?.visibility = if (isLoggedIn) View.GONE else View.VISIBLE
     }
 
-    // 프로필 이미지 업데이트
+
     private fun updateProfileImage() {
         val imageResId = sharedPreferences.getInt("profileImageResId", R.drawable.mainlogo)
         profileImageView.setImageResource(imageResId)
     }
 
-    // 이미지 선택 다이얼로그 표시
+
     private fun showImagePickerDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_image_picker, null)
         val dialog = AlertDialog.Builder(this)
@@ -211,8 +211,8 @@ class MainActivity : AppCompatActivity() {
         val image1 = dialogView.findViewById<ImageView>(R.id.image1)
         val image2 = dialogView.findViewById<ImageView>(R.id.image2)
         val image3 = dialogView.findViewById<ImageView>(R.id.image3)
-        val image4 = dialogView.findViewById<ImageView>(R.id.image4)  // 추가
-        val image5 = dialogView.findViewById<ImageView>(R.id.image5)  // 추가
+        val image4 = dialogView.findViewById<ImageView>(R.id.image4)
+        val image5 = dialogView.findViewById<ImageView>(R.id.image5)
 
         image1.setOnClickListener {
             saveSelectedImage(R.drawable.image1)
@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        // 추가된 이미지 클릭 리스너
+
         image4.setOnClickListener {
             saveSelectedImage(R.drawable.image4)
             dialog.dismiss()
@@ -243,13 +243,13 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    // 선택한 이미지 저장
+
     private fun saveSelectedImage(imageResId: Int) {
         val editor = sharedPreferences.edit()
         editor.putInt("profileImageResId", imageResId)
         editor.apply()
 
-        // 선택 후 프로필 이미지 업데이트
+
         updateProfileImage()
     }
 }

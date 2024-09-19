@@ -12,16 +12,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <android.widget.Button
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:background="@android:color/transparent"
-            android:text="&#60;"
-            android:onClick="onBackPressed"
-            />
-
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -69,25 +59,6 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="24dp"
             android:onClick="onLoginClick" />
-
-        <TextView
-            android:id="@+id/sns_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SNS로 시작하기"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp" />
-
-        <ImageButton
-            android:id="@+id/btn_kakao_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="카카오 계정으로 로그인"
-            android:onClick="onKakaoLoginClick"
-            android:scaleType="centerInside"
-            android:src="@drawable/kakao_logo" />
 
         <android.widget.Button
             android:id="@+id/btn_email_signup"

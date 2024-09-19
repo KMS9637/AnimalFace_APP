@@ -26,7 +26,7 @@ class AnimalFaceResultActivity : AppCompatActivity() {
 
         resultImageView = findViewById(R.id.cameraImg)
         resultTextView = findViewById(R.id.result_text)
-        backButton = findViewById(R.id.backButton) // ImageButton 참조
+
 
         backButton.setOnClickListener {
             finish()

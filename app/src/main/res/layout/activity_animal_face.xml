@@ -15,17 +15,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-171dp">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@null"
-            android:contentDescription="@string/back"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_back_remove" />
-
         <TextView
             android:id="@+id/animal_test_title"
             android:layout_width="wrap_content"

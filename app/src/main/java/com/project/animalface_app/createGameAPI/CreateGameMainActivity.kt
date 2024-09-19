@@ -1,10 +1,12 @@
 package com.project.animalface_app.createGameAPI
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.project.animalface_app.R
 import com.project.animalface_app.RetrofitClient
@@ -22,14 +24,10 @@ class CreateGameMainActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private lateinit var resetButton: Button
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_game_main)
-
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener {
-            onBackPressed()
-        }
 
         apiService = RetrofitClient.instance.create(GameApiService::class.java)
 

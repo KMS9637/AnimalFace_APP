@@ -30,10 +30,10 @@ class SearchActivity : AppCompatActivity() {
         searchView = findViewById(R.id.searchView)
         recyclerView = findViewById(R.id.recyclerView)
 
-        // 가로로 스크롤 가능한 리사이클러뷰 설정
+
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // 어댑터에 선택된 아이템에 대한 처리 추가
+
         adapter = SearchAdapter(itemList) { selectedItem ->
             when (selectedItem) {
                 "동물상테스트" -> {

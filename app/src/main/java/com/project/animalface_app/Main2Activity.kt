@@ -26,11 +26,5 @@ class Main2Activity : AppCompatActivity() {
             Log.d("Main2Activity", "게임 생성 클릭")
         }
 
-        val largeRectangle: Button = findViewById(R.id.large_rectangle)
-        largeRectangle.setOnClickListener {
-            val intent = Intent(this, AnimalFaceActivity::class.java)
-            startActivity(intent)
-            Log.d("Main2Activity", "동물상 테스트 버튼 클릭됨")
-        }
     }
 }

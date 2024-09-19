@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class SearchAdapter(
     private var itemList: List<String>,
-    private val itemClickListener: (String) -> Unit // 클릭 리스너 추가
+    private val itemClickListener: (String) -> Unit
 ) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -17,16 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@null"
-                android:contentDescription="@string/back"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_back_arrow" />
 
             <TextView
                 android:id="@+id/animal_test_title"
@@ -64,32 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="300dp"
-                        android:maxHeight="200dp"
-                        android:src="@drawable/kakao_icon" />
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="300dp"
-                        android:maxHeight="200dp"
-                        android:src="@drawable/link_copy" />
-
-                </LinearLayout>
 
                 <Button
                     android:id="@+id/other_test_button"

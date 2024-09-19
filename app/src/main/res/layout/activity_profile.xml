@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- 헤더 -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:padding="16dp">
 
-        <!-- 뒤로 가기 버튼 -->
+
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:contentDescription="뒤로 가기"
             android:src="@drawable/ic_back_remove" />
 
-        <!-- 제목 텍스트 -->
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <!-- 닉네임 수정 영역 -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,17 +59,9 @@
             android:textColor="@android:color/darker_gray"
             android:layout_centerHorizontal="true"/>
 
-        <ImageButton
-            android:id="@+id/btn_edit_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="닉네임 수정"
-            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <!-- 계정 삭제 영역 -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

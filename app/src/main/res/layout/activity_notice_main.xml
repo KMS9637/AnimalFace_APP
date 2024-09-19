@@ -11,17 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@null"
-        android:src="@drawable/ic_back_arrow"
-        android:contentDescription="@string/back"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
