@@ -37,6 +37,10 @@ android {
 
 dependencies {
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
