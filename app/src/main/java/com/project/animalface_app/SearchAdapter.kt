@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class SearchAdapter(private var itemList: List<String>) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(
+    private var itemList: List<String>,
+    private val itemClickListener: (String) -> Unit // 클릭 리스너 추가
+) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.textView)
@@ -18,7 +21,12 @@ class SearchAdapter(private var itemList: List<String>) : RecyclerView.Adapter<S
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.textView.text = itemList[position]
+        val item = itemList[position]
+        holder.textView.text = item
+
+        holder.itemView.setOnClickListener {
+            itemClickListener(item)
+        }
     }
 
     override fun getItemCount(): Int {
