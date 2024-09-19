@@ -46,7 +46,6 @@ class AnimalFaceActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var apiService: INetworkService
 
-    // 권한 관련 상수
     private val CAMERA_REQUEST_CODE = 100
     private val STORAGE_REQUEST_CODE = 101
 
@@ -58,9 +57,11 @@ class AnimalFaceActivity : AppCompatActivity() {
         imageView = binding.resultUserImage
         apiService = MyApplication.getApiService()
 
-        // 권한 체크
-        checkPermissions()
+        binding.backButton.setOnClickListener {
+            finish()
+        }
 
+        checkPermissions()
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -78,12 +79,10 @@ class AnimalFaceActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                // 이미지가 성공적으로 촬영되었는지 확인 후 처리
                 if (filePath.isNotEmpty()) {
                     val bitmap = BitmapFactory.decodeFile(filePath)
                     imageView.setImageBitmap(bitmap)
 
-                    // imageUri가 제대로 초기화되었는지 확인
                     Log.d("AnimalFaceActivity", "카메라로 촬영된 이미지 URI: $imageUri")
                 } else {
                     Toast.makeText(this, "이미지 저장 경로가 비어있습니다.", Toast.LENGTH_SHORT).show()
@@ -108,7 +107,6 @@ class AnimalFaceActivity : AppCompatActivity() {
                 val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
                 val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-                // storageDir이 제대로 설정되었는지 확인
                 if (storageDir != null) {
                     Log.d("AnimalFaceActivity", "저장 디렉터리 경로: ${storageDir.absolutePath}")
                 } else {
@@ -126,7 +124,6 @@ class AnimalFaceActivity : AppCompatActivity() {
                         file
                     )
 
-                    // imageUri 초기화 및 로그 출력
                     imageUri = photoURI
                     Log.d("AnimalFaceActivity", "생성된 이미지 URI: $imageUri")
 
@@ -134,7 +131,6 @@ class AnimalFaceActivity : AppCompatActivity() {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     Log.d("AnimalFaceActivity", "카메라 Intent 생성 및 실행 준비 완료")
 
-                    // 예외 처리와 로그를 추가해 문제를 파악
                     try {
                         requestCameraFileLauncher.launch(intent)
                         Log.d("AnimalFaceActivity", "카메라 호출 성공: $imageUri")
@@ -234,17 +230,14 @@ class AnimalFaceActivity : AppCompatActivity() {
         })
     }
 
-    // 권한 확인 및 요청
     private fun checkPermissions(): Boolean {
         var allPermissionsGranted = true
 
-        // 카메라 권한 확인
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
             allPermissionsGranted = false
         }
 
-        // Android 10(Q) 이상에서는 저장소 권한을 요청하지 않도록 조건을 추가
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_REQUEST_CODE)
@@ -263,20 +256,16 @@ class AnimalFaceActivity : AppCompatActivity() {
         when (requestCode) {
             CAMERA_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 카메라 권한 부여됨
                     Log.d("AnimalFaceActivity", "카메라 권한이 부여되었습니다.")
                 } else {
-                    // 카메라 권한 거부됨
                     Toast.makeText(this, "카메라 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
                     Log.e("AnimalFaceActivity", "카메라 권한이 거부되었습니다.")
                 }
             }
             STORAGE_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 저장소 권한 부여됨
                     Log.d("AnimalFaceActivity", "저장소 권한이 부여되었습니다.")
                 } else {
-                    // 저장소 권한 거부됨
                     Toast.makeText(this, "저장소 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
                     Log.e("AnimalFaceActivity", "저장소 권한이 거부되었습니다.")
                 }

@@ -1,6 +1,7 @@
 package com.project.animalface_app
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class AnimalFaceResultActivity : AppCompatActivity() {
 
     private lateinit var resultImageView: ImageView
     private lateinit var resultTextView: TextView
+    private lateinit var backButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +26,15 @@ class AnimalFaceResultActivity : AppCompatActivity() {
 
         resultImageView = findViewById(R.id.cameraImg)
         resultTextView = findViewById(R.id.result_text)
+        backButton = findViewById(R.id.backButton) // ImageButton 참조
+
+        backButton.setOnClickListener {
+            finish()
+        }
 
         val predictedClassLabel = intent.getStringExtra(EXTRA_PREDICTED_CLASS_LABEL) ?: "알 수 없음"
         val confidence = intent.getDoubleExtra(EXTRA_CONFIDENCE, 0.0)
-        val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL) // 서버에서 받은 이미지 URL (선택사항)
+        val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL)
 
         if (predictedClassLabel == "알 수 없음") {
             resultTextView.text = "결과를 가져올 수 없습니다."
