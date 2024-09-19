@@ -1,21 +1,17 @@
 package com.project.animalface_app.ohjapp
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.project.animalface_app.R
 
 class QuizResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_quiz_result)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        val totalCorrect = intent.getIntExtra("TOTAL_CORRECT", 0)
+        val resultTextView: TextView = findViewById(R.id.resultTextView)
+        resultTextView.text = "총 $totalCorrect 문제를 맞추셨습니다."
     }
 }
