@@ -22,7 +22,6 @@ import com.project.animalface_app.retrofit.MyApplication
 import com.project.animalface_app.viewModel.LoginViewModel
 import com.project.animalface_app.viewModelFactory.LoginViewModelFactory
 
-
 class ProfileActivity : AppCompatActivity() {
     private lateinit var networkService: INetworkService
     private lateinit var sharedPreferences: SharedPreferences
@@ -45,10 +44,25 @@ class ProfileActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val repository = LoginRepository(networkService, sharedPreferences)
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory(repository)).get(
-            LoginViewModel::class.java)
+            LoginViewModel::class.java
+        )
 
-        val deleteButton: ImageButton = findViewById(R.id.btn_delete_account)
-        deleteButton.setOnClickListener {
+        // 닉네임 수정 버튼 클릭 리스너 설정
+        findViewById<ImageButton>(R.id.btn_edit_nickname).setOnClickListener {
+            val editText = EditText(this)
+            AlertDialog.Builder(this)
+                .setTitle("닉네임 수정")
+                .setView(editText)
+                .setPositiveButton("저장") { dialog, which ->
+                    val newNickname = editText.text.toString()
+                    findViewById<TextView>(R.id.tv_nickname).text = newNickname
+                }
+                .setNegativeButton("취소", null)
+                .show()
+        }
+
+        // 계정 삭제 버튼 클릭 리스너 설정
+        findViewById<ImageButton>(R.id.btn_delete_account).setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("계정 삭제")
                 .setMessage("정말로 계정을 삭제하시겠습니까?")
@@ -66,32 +80,7 @@ class ProfileActivity : AppCompatActivity() {
                 .show()
         }
 
-        findViewById<ImageButton>(R.id.btn_edit_nickname).setOnClickListener {
-            val editText = EditText(this)
-            AlertDialog.Builder(this)
-                .setTitle("닉네임 수정")
-                .setView(editText)
-                .setPositiveButton("저장") { dialog, which ->
-                    val newNickname = editText.text.toString()
-                    findViewById<TextView>(R.id.tv_nickname).text = newNickname
-                }
-                .setNegativeButton("취소", null)
-                .show()
-        }
-
-        findViewById<ImageButton>(R.id.btn_edit_intro_keyword).setOnClickListener {
-            val editText = EditText(this)
-            AlertDialog.Builder(this)
-                .setTitle("소개 키워드 수정")
-                .setView(editText)
-                .setPositiveButton("저장") { dialog, which ->
-                    val newKeyword = editText.text.toString()
-                    findViewById<TextView>(R.id.tv_intro_keyword).text = newKeyword
-                }
-                .setNegativeButton("취소", null)
-                .show()
-        }
-
+        // 계정 삭제 결과에 대한 Observer 설정
         loginViewModel.deleteResult.observe(this) { success ->
             if (success) {
                 Toast.makeText(this, "회원 삭제 성공", Toast.LENGTH_SHORT).show()
@@ -100,6 +89,12 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "회원 삭제 실패", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // 메인 화면으로 돌아가는 버튼 클릭 리스너 설정
+        findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 
