@@ -13,7 +13,7 @@ class MyApplication : Application(){
     private lateinit var retrofit_token: Retrofit
     private lateinit var apiService: INetworkService
 
-    val BASE_URL = "http://54.180.227.187:8080"
+    val BASE_URL = "http://10.100.201.41:8080"
 
     var networkService: INetworkService
 

@@ -27,11 +27,6 @@ class AnimalFaceResultActivity : AppCompatActivity() {
         resultImageView = findViewById(R.id.cameraImg)
         resultTextView = findViewById(R.id.result_text)
 
-
-        backButton.setOnClickListener {
-            finish()
-        }
-
         val predictedClassLabel = intent.getStringExtra(EXTRA_PREDICTED_CLASS_LABEL) ?: "알 수 없음"
         val confidence = intent.getDoubleExtra(EXTRA_CONFIDENCE, 0.0)
         val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL)
