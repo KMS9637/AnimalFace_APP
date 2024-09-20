@@ -54,6 +54,7 @@ class QuizListActivity : AppCompatActivity() {
             intent.putExtra("QUIZ_NO", quiz.quiz_no)
             startActivity(intent)
         }
-        quizRecyclerView.adapter = adapter  // 어댑터를 RecyclerView에 연결
+        quizRecyclerView.adapter = QuizListAdapter(quizList) { quiz ->
+    }
     }
 }

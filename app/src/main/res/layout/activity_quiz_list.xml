@@ -7,8 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".ohjapp.QuizListActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문제다 문제야"
+        android:textSize="24sp"
+        android:textColor="#333333"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quizRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
